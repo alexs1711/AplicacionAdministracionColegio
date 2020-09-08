@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="ap" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Admin.AdminController">
+   <children>
+      <TabPane prefHeight="720.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Estudiantes">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox layoutX="340.0" prefHeight="691.0" prefWidth="940.0">
+                           <children>
+                              <TableView fx:id="studenttable" prefHeight="691.0" prefWidth="943.0">
+                                <columns>
+                                  <TableColumn fx:id="idcolumn" prefWidth="143.0" text="ID" />
+                                  <TableColumn fx:id="firstnamecolumn" minWidth="0.0" prefWidth="217.0" text="Nombre" />
+                                    <TableColumn fx:id="lastnamecolumn" prefWidth="146.0" text="Apellidos" />
+                                    <TableColumn fx:id="emailcolumn" prefWidth="225.0" text="Email" />
+                                    <TableColumn fx:id="dobcolumn" prefWidth="208.0" text="DOB" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </HBox>
+                        <VBox onMouseMoved="#activateButtons" prefHeight="691.0" prefWidth="340.0">
+                           <children>
+                              <Label onMouseMoved="#activateButtons" prefHeight="39.0" prefWidth="340.0" text="Añadir Estudiantes">
+                                 <padding>
+                                    <Insets left="100.0" />
+                                 </padding>
+                              </Label>
+                              <TextField fx:id="id" promptText="ID">
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" left="15.0" right="15.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <TextField fx:id="firstname" promptText="Nombre">
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" left="15.0" right="15.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <TextField fx:id="lastname" promptText="Apellidos">
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" left="15.0" right="15.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <TextField fx:id="email" promptText="Email">
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" left="15.0" right="15.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <DatePicker fx:id="dob" prefHeight="25.0" prefWidth="344.0">
+                                 <VBox.margin>
+                                    <Insets left="15.0" right="15.0" />
+                                 </VBox.margin>
+                              </DatePicker>
+                              <Button mnemonicParsing="false" onAction="#addStudent" prefHeight="25.0" prefWidth="316.0" text="Añadir Estudiante">
+                                 <VBox.margin>
+                                    <Insets left="15.0" right="15.0" top="15.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#clearFields" onMouseClicked="#activateButtons" onMouseEntered="#activateButtons" onMouseExited="#activateButtons" prefHeight="25.0" prefWidth="314.0" text="Limpiar">
+                                 <VBox.margin>
+                                    <Insets left="15.0" right="15.0" top="15.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#loadStudentData" prefHeight="25.0" prefWidth="337.0" text="Cargar/Recargar BBDD">
+                                 <VBox.margin>
+                                    <Insets left="15.0" right="15.0" top="15.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Label prefHeight="58.0" prefWidth="310.0" text="Para ordenar por dos casillas o mas &#13;presione la tecla shift sobre las columnas superiores">
+                                 <VBox.margin>
+                                    <Insets left="15.0" right="15.0" top="15.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Usuarios Acceso">
+                <content>
+                    <AnchorPane fx:id="userpane" minHeight="0.0" minWidth="0.0" onMouseMoved="#activateButtons" prefHeight="180.0" prefWidth="200.0">
+                        <children>
+                            <HBox layoutX="340.0" layoutY="28.0" prefHeight="663.0" prefWidth="940.0">
+                                <children>
+                                    <TableView fx:id="accesstable" onMouseMoved="#activateButtons" prefHeight="632.0" prefWidth="940.0">
+                                        <columns>
+                                    <TableColumn fx:id="loginImage" prefWidth="91.0" text="Imagen" />
+                                            <TableColumn fx:id="namecolumn" onEditCommit="#ModifySelectedRowLoginName" prefWidth="209.0" text="Nombre" />
+                                            <TableColumn fx:id="passwordcolumn" minWidth="0.0" onEditCommit="#ModifySelectedRowLoginPassword" prefWidth="177.0" text="Contraseña" />
+                                            <TableColumn fx:id="divisioncolumn" prefWidth="175.0" text="Categoria" />
+                                    <TableColumn fx:id="id2column" prefWidth="286.0" text="ID" />
+                                        </columns>
+                                    </TableView>
+                                </children>
+                            </HBox>
+                            <VBox prefHeight="691.0" prefWidth="340.0">
+                                <children>
+                                    <Label prefHeight="39.0" prefWidth="340.0" text="Añadir Usuarios">
+                                        <padding>
+                                            <Insets left="100.0" />
+                                        </padding>
+                                    </Label>
+                                    <TextField fx:id="name" onKeyTyped="#activateButtons" promptText="Nombre Cuenta">
+                                        <VBox.margin>
+                                            <Insets bottom="15.0" left="15.0" right="15.0" />
+                                        </VBox.margin>
+                                    </TextField>
+                                    <TextField fx:id="password" onKeyTyped="#activateButtons" promptText="Contraseña">
+                                        <VBox.margin>
+                                            <Insets bottom="15.0" left="15.0" right="15.0" />
+                                        </VBox.margin>
+                                    </TextField>
+                              <ComboBox fx:id="division" onMouseMoved="#activateButtons" prefHeight="25.0" prefWidth="380.0" promptText="Profesor/Estudiante">
+                                 <VBox.margin>
+                                    <Insets left="15.0" right="15.0" />
+                                 </VBox.margin>
+                              </ComboBox>
+
+                                    <Button fx:id="adduserbutton" mnemonicParsing="false" onAction="#addLogin" onMouseClicked="#activateButtons" onMouseExited="#activateButtons" onMouseMoved="#activateButtons" prefHeight="25.0" prefWidth="316.0" text="Añadir Usuario">
+                                        <VBox.margin>
+                                            <Insets left="15.0" right="15.0" top="15.0" />
+                                        </VBox.margin>
+                                    </Button>
+                                    <Button fx:id="clearbutton" mnemonicParsing="false" onAction="#clearFieldsLogin" onMouseEntered="#activateButtons" onMouseExited="#activateButtons" onMouseMoved="#activateButtons" prefHeight="25.0" prefWidth="314.0" text="Limpiar">
+                                        <VBox.margin>
+                                            <Insets left="15.0" right="15.0" top="15.0" />
+                                        </VBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#loadLoginData" prefHeight="25.0" prefWidth="337.0" text="Cargar/Recargar BBDD">
+                                        <VBox.margin>
+                                            <Insets left="15.0" right="15.0" top="15.0" />
+                                        </VBox.margin>
+                                    </Button>
+                              <Button fx:id="deletebutton" mnemonicParsing="false" onAction="#deleteRowLogin" prefHeight="25.0" prefWidth="360.0" text="Borrar seleccionado">
+                                 <VBox.margin>
+                                    <Insets left="15.0" right="15.0" top="15.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Label prefHeight="58.0" prefWidth="340.0" text="Para ordenar por dos casillas o mas &#13;presione la tecla shift sobre las columnas superiores&#13;Para editar datos click sobre ellos">
+                                 <VBox.margin>
+                                    <Insets left="15.0" right="15.0" top="15.0" />
+                                 </VBox.margin>
+                              </Label>
+                                </children>
+                            </VBox>
+                        <TextField fx:id="searchfield" layoutX="970.0" layoutY="2.0" onKeyTyped="#SearchUserName" onMouseClicked="#clearSearchButton" prefHeight="25.0" prefWidth="138.0" promptText="*Buscar Nombre*" />
+                        <Label layoutX="915.0" layoutY="6.0" prefHeight="17.0" prefWidth="49.0" text="Buscar:" />
+                        <TextField fx:id="searchpassword" layoutX="1117.0" layoutY="2.0" onKeyTyped="#SearchPassword" onMouseClicked="#clearPasswordButton" promptText="*Buscar Contraseña*" />
+                        </children>
+                    </AnchorPane>
+                </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

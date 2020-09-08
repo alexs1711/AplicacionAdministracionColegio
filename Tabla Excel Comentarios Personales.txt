@@ -1,0 +1,145 @@
+1.- Pedir donde quiere guardar el fichero (la primera vez)
+
+	
+
+2.- Al entrar en la aplicación, que vuelque los datos que hay en un fichero en una estructura de datos interna 
+
+	Se conecta al fichero sql segun se abre, este fichero tiene que estar en la misma carpeta que el jar
+
+3.- Botón para volcar los datos que hay en una estructura de datos interna, en un fichero (cuando el usuario quiera)
+	Los datos se suben al usar los botones de añadir,borrar, modificandolo al clickear
+	Para visualizarlos hay que darle al boton de recargar la BBDD
+	
+4.- Trabajar con un listado de libros, alumnos,…
+	
+	Como aclaracion hay dos listados, el de estudiantes y el de las cuentas de acceso y casi todas las funciones las he hecho sobre 
+	la de cuentas de acceso, con algo mas de tiempo las habria hecho tambien en el otro
+
+5.- Algún dato, de la clase que uséis, sea una tabla (y que se visualicen estos datos)
+
+	La tableview accesstable 
+
+6.- Modificar datos
+	
+	Haciendo click sobre el nombre o contraseña y dando al enter
+
+7.- Insertar datos nuevos
+
+	Con el boton adduser / Añadir usuario se introducen los datos en la sql, la ID se autogenera automaticamente con la funcion de
+	autoincrease con sql para evitar asi ID's repetidas.Aparte los nombres introducidos tienen que ser unicamente letras a-z o A-Z no admite
+	espacios ni caracteres fuera de letras, comprobacion antes de meter los datos.Con sql tampoco se admiten nombres repetidos.
+
+8.Borrar
+
+	Con el boton borrar seleccionado, borras la celda seleccionada y subes el cambio a la sql inmediatamente
+	deleteRowLogin()
+
+9.- Búsqueda ( y que me permita modificar, insertar o borrar aquellos que cumpla la condición de búsqueda)
+
+	Se puede hacer la busqueda por los campos de nombre y contraseña y modificar los que esten seleccionados.
+
+10.- Búsqueda y que todos aquellos objetos, que cumplan dicha condición, pasarlos a otro listado
+
+	Se actualiza los resultados filtrados en la misma tabla, como tal van a otro listado filtrado mostrado en la misma tabla
+	SearchPassword()
+	SearchUserName()
+
+11.- Búsqueda y que me diga si hay algún objeto que cumpla dicha condición (con al menos dos condiciones)
+
+	Busqueda de contraseña y despues nombre (y viceversa)
+	SearchPassword()
+	SearchUserName()
+
+12.- Usar el Hashset
+	He hecho un intento en la tabla de estudiantes con fecha usando una CustomObservableList pero no he sido capaz de evitar
+	que saque duplicados, es decir no esta hecho aunque uso un ObservableSet pero claro sin funcionalidad ninguna.
+
+13.- Visualizar la información de todo el listado
+	Cargar/Recargar BBDD muestra todo el listado 
+	loadStudentData
+	loadLoginData
+
+14.- Ordenar por distintos datos(por nombre, por edad,…)
+
+	Hecho con las TableColumn en cada tabla
+
+15.- Dar opción de ordenarlo por dos datos. Por ejemplo ordenarlo por el apellido y aquellos que coincidan, que se ordene por el nombre
+
+	Funcion de javafx, presionando shift sobre la parte superior de cada columna
+
+16.- Al cerrar la aplicación, que vuelque los datos que hay en una estructura interna de datos en un fichero
+
+	En este caso constantemente se registran todos los cambios
+
+17.- Botones deshabilitados hasta que suceda algo
+	
+	Un boolean sencillo que comprueba las condiciones para que se activen o desactiven.
+	En el documento Admin.fxml se activa la condicion de OnMouseMove en el anchorPane de los usuarios de acceso
+	 para que el metodo activateButtons() se active
+	
+	activateButtons()
+	activateAddClearButtons()
+        activateDeleteButton()
+
+18.- Usar las ventanas de JOptionPane (variadas)
+
+	Realmente no he usado ninguna ventana de JOptionPane como tal al haber usado JAVAFX.
+
+19.- Con imágenes, donde habrá alguna imagen que dependa de algún dato.
+
+	Una ImageView creada para cada usuario de acceso, no se puede dejar esa variable como global ya que 
+	no se puede usar una ImageView dos veces.
+	loadLoginData()
+
+20.- Al pulsar, sobre una caja de texto, desaparezca lo que tenga en dicha caja. Por ejemplo: a la hora de modificar, que aparezca los
+datos que hay ahora mismo y al tocar, desaparezca el dato antiguo, para que pueda poner el dato nuevo
+
+	En las cajas de busqueda de usuario y contraseña hay una funcion que OnMouseClick se borre el contenido
+
+21.- Se haga una ventana no visibles y cuando vuelva a ella, que aparezca
+
+	En todas las alert hago referencia a la id del anchorpane ap para que lo dejen oculto hasta que se cierre la Alert
+	stage.hide();
+	stage.show();
+
+22.- Diseño
+
+
+23.- Controlar todo tipo de errores que se pudieran producir (NO visualice mensajes rojos)
+
+	Todos los errores se cogen con try and catch
+
+24.- Detalles + validaciones
+
+	Hay ciertas validaciones como no dejar que se introduzcan nombres ya existentes o introducir nombres que contengan 
+	numeros,espacios,caracteres fuera de la a-z y la A-Z basicamente.
+	No se puede introducir un usuario sin especificar su categoria/division
+	No se puede modificar el nombre si no cumple con lo mencionado antes
+
+
+Mensaje de que no hay nadie si da al botón modificar y el listado está vacío
+
+	Para modificar hay que clickear sobre la tableview, tiene que estar cargado para funcionar
+	entonces nunca se puede modificar con la tabla vacia como tal.
+
+Mensaje de que no hay nadie si da al botón buscar  y el listado está vacío
+
+	Si eso pasa, saltara una ventana de Alert indicandonos eso mismo.
+
+Mensaje de que no hay nadie si da al botón borrar  y el listado está vacío
+
+	Este mensaje estaba configurado pero claro al deshabilitar el boton esta funcionalidad desaparece.
+
+
+25 - Entrelazar multiples tablas
+
+    Para aumentar la funcionalidad de la tabla, se deben de creer 3 diferentes niveles de acceso a la aplicacion.
+    El nivel superior sera el del admin, el cual podra modificar los registros de acceso sobre los que se accede a las tablas
+    El nivel medio sera el del profesor el cual gobierna sobre los estudiantes y les mandara los deberes y notas a cada uno
+    de los estudiantes que hayan
+    El estudiante tendra su propio acceso personal en el cual podra ver sus notas y deberes asignados, tendra notificaciones
+    de cuando debera de hacerlos y cuando tendra las fechas de los examenes
+
+    Aparte debe de existir una cuarta identidad la cual sera la de las asignaturas en la cual se matricularan los alumnos.
+	
+
