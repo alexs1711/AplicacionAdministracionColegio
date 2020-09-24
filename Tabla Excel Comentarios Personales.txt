@@ -140,6 +140,6 @@ Mensaje de que no hay nadie si da al botón borrar  y el listado está vacío
     El estudiante tendra su propio acceso personal en el cual podra ver sus notas y deberes asignados, tendra notificaciones
     de cuando debera de hacerlos y cuando tendra las fechas de los examenes
 
-    Aparte debe de existir una cuarta identidad la cual sera la de las asignaturas en la cual se matricularan los alumnos.
+    Aparte debe de existir una cuarta identidad la cual sera la de las asignaturas en la cual se matricularan los alumnos.aaaaa
 	
 

@@ -7,12 +7,13 @@ package loginapp;
 
 import Admin.AdminController;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import students.StudentsController;
@@ -51,11 +52,22 @@ public class LoginController implements Initializable {
 
             this.comboBox.setItems(FXCollections.observableArrayList(option.values()));
 
+
     }
-    @FXML
-    public void Login(ActionEvent event){
+
+
+
+    public void Login(){
         try {
-            if (this.loginModel.isLogin(this.username.getText(), this.password.getText(), ((option)this.comboBox.getValue()).toString())){
+            if ( (option)this.comboBox.getValue() == null || this.username.getText().isEmpty() || this.password.getText().isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error de acceso");
+                alert.setHeaderText("Error");
+                alert.setContentText("Has cometido un error al introducir los datos \n Revisa el nombre de usuario, contraseña y su categoria.");
+                alert.showAndWait();
+            }
+
+             else if (this.loginModel.isLogin(this.username.getText(), this.password.getText(), ((option)this.comboBox.getValue()).toString())){
                 Stage stage = (Stage)this.loginButton.getScene().getWindow();
                 stage.close();
                     switch(((option)this.comboBox.getValue()).toString()) {
@@ -68,12 +80,13 @@ public class LoginController implements Initializable {
 
                     }
             }
+
             else {
-                    this.loginStatus.setText("Error, revisa el usuario/contraseña");
+                    this.loginStatus.setText("Error, revisa\n el usuario o \ncontraseña");
             }
         }
         catch (Exception localException){
-
+            localException.printStackTrace();
         }
     }
     public void studentLogin(){
@@ -108,6 +121,12 @@ public class LoginController implements Initializable {
         }
         catch (IOException e){
             e.printStackTrace();
+        }
+    }
+
+    public void EnterKEY(KeyEvent keyEvent) {
+        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+            Login();
         }
     }
 }

@@ -25,5 +25,6 @@ public class logginapp extends Application {
     public static void main(String[] args) {
         launch(args);/*Simplemente llama el metodo estatico launcha para iniciar la aplicacion*/
     }
+
     
 }
