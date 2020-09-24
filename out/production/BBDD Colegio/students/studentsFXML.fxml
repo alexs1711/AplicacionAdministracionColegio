@@ -13,7 +13,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.DatePicker?>
-<AnchorPane fx:id="app" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Admin.AdminController">
+<AnchorPane fx:id="app" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="students.StudentsController">
     <children>
         <TabPane prefHeight="720.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -34,9 +34,9 @@
                                 </TableView>
                             </children>
                         </HBox>
-                        <VBox onMouseMoved="#activateButtons" prefHeight="691.0" prefWidth="340.0">
+                        <VBox  prefHeight="691.0" prefWidth="340.0">
                             <children>
-                                <Label onMouseMoved="#activateButtons" prefHeight="39.0" prefWidth="340.0" text="Añadir Estudiantes">
+                                <Label  prefHeight="39.0" prefWidth="340.0" text="Añadir Estudiantes">
                                     <padding>
                                         <Insets left="100.0" />
                                     </padding>
@@ -66,17 +66,17 @@
                                         <Insets left="15.0" right="15.0" />
                                     </VBox.margin>
                                 </DatePicker>
-                                <Button mnemonicParsing="false" onAction="#addStudent" prefHeight="25.0" prefWidth="316.0" text="Añadir Estudiante">
+                                <Button mnemonicParsing="false"  prefHeight="25.0" prefWidth="316.0" text="Añadir Estudiante">
                                     <VBox.margin>
                                         <Insets left="15.0" right="15.0" top="15.0" />
                                     </VBox.margin>
                                 </Button>
-                                <Button mnemonicParsing="false" onAction="#clearFields" onMouseClicked="#activateButtons" onMouseEntered="#activateButtons" onMouseExited="#activateButtons" prefHeight="25.0" prefWidth="314.0" text="Limpiar">
+                                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="314.0" text="Limpiar">
                                     <VBox.margin>
                                         <Insets left="15.0" right="15.0" top="15.0" />
                                     </VBox.margin>
                                 </Button>
-                                <Button mnemonicParsing="false" onAction="#loadStudentData" prefHeight="25.0" prefWidth="337.0" text="Cargar/Recargar BBDD">
+                                <Button mnemonicParsing="false"  prefHeight="25.0" prefWidth="337.0" text="Cargar/Recargar BBDD">
                                     <VBox.margin>
                                         <Insets left="15.0" right="15.0" top="15.0" />
                                     </VBox.margin>
@@ -95,5 +95,4 @@
         </tabs>
         </TabPane>
     </children>
-   <Button layoutX="598.0" layoutY="643.0" mnemonicParsing="false" onAction="#loadStudentData" text="Cargar BBDD" />
 </AnchorPane>
