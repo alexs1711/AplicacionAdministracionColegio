@@ -17,6 +17,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import students.StudentsController;
+import teachers.TeachersController;
 
 import java.io.IOException;
 import java.util.ResourceBundle;
@@ -72,12 +73,14 @@ public class LoginController implements Initializable {
                 stage.close();
                     switch(((option)this.comboBox.getValue()).toString()) {
                         case "Profesor":
-                            adminLogin();
+
+                            teacherLogin();
                             break;
                         case "Estudiante":
                             studentLogin();
                             break;
-
+                        case "Admin":
+                            adminLogin();
                     }
             }
 
@@ -118,6 +121,24 @@ public class LoginController implements Initializable {
             adminStage.setTitle("Menu Administrador");
             adminStage.setResizable(false);
             adminStage.show();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void teacherLogin(){
+        try{
+            Stage teacherStage = new Stage();
+            FXMLLoader teacherLoader = new FXMLLoader();
+            Pane teacherroot = (Pane)teacherLoader.load(getClass().getResource("/teachers/Teachers.fxml").openStream());
+            TeachersController teachersController = (TeachersController) teacherLoader.getController();
+
+            Scene scene = new Scene(teacherroot);
+            teacherStage.setScene(scene);
+            teacherStage.setTitle("Menu Profesor");
+            teacherStage.setResizable(false);
+            teacherStage.show();
         }
         catch (IOException e){
             e.printStackTrace();
