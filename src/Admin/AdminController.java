@@ -3,19 +3,21 @@ package Admin;
 import dbUtil.dbConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.converter.DefaultStringConverter;
 import loginapp.option;
 
 import java.net.URL;
@@ -25,50 +27,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-import com.sun.javafx.collections.VetoableListDecorator;
 import org.sqlite.SQLiteException;
 
 public class AdminController implements Initializable {
-
-    @FXML
-    private TextField id;
-    @FXML
-    private TextField firstname;
-    @FXML
-    private TextField lastname;
-    @FXML
-    private TextField email;
-    @FXML
-    private DatePicker dob;
-
-    @FXML
-    private TableView<StudentData> studenttable;
-
-    @FXML
-    private TableColumn<StudentData, String> idcolumn;
-
-    @FXML
-    private TableColumn<StudentData, String> firstnamecolumn;
-
-    @FXML
-    private TableColumn<StudentData, String> lastnamecolumn;
-
-    @FXML
-    private TableColumn<StudentData, String> emailcolumn;
-
-    @FXML
-    private TableColumn<StudentData, String> dobcolumn;
-
     private dbConnection dc;
-    private ObservableSet<StudentData> data;
-
-
-    private String sql = "SELECT * FROM students";
-
     @FXML
     private AnchorPane userpane;
+    private ObservableList<String> RowDiv;
+
+
 
     public void initialize(URL url, ResourceBundle rb) {
+        RowDiv = FXCollections.observableArrayList();
+        RowDiv.add("Alumno");
+        RowDiv.add("Profesor");
+        RowDiv.add("Admin");
         this.dc = new dbConnection(); /*conexion inicializada*/
         this.division.setItems(FXCollections.observableArrayList(option.values()));
         accesstable.setEditable(true);
@@ -100,86 +73,6 @@ public class AdminController implements Initializable {
         deletebutton.setDisable(activate);
     }
 
-
-    public class CustomObservableList<E> extends VetoableListDecorator<E> {
-
-        public CustomObservableList(ObservableList<E> decorated) {
-            super(decorated);
-        }
-
-        @Override
-        protected void onProposedChange(List<E> toBeAdded, int... indexes) {
-            for (E e : toBeAdded) {
-                if (contains(e)) {
-                    throw new IllegalArgumentException("Duplicado añadido");
-                }
-            }
-        }
-    }
-
-
-    @FXML
-    private void loadStudentData(ActionEvent event) throws SQLException {
-        Set<StudentData> set = new HashSet<StudentData>();
-        CustomObservableList<StudentData> list = null;
-        try {
-            Connection conn = dbConnection.getConnection();
-
-            list = new CustomObservableList<StudentData>(FXCollections.observableArrayList(set));
-
-
-            ResultSet rs = conn.createStatement().executeQuery(sql);
-            while (rs.next())/*Mientras haya un siguiente en la tabla sql*/ {
-                list.add(new StudentData(rs.getString(1), rs.getString(2),
-                        rs.getString(3), rs.getString(4), rs.getString(5))); /*nuevo estudiante */
-            }
-
-
-        } catch (SQLException e) {
-            System.err.println("Error " + e);
-        }
-
-        this.idcolumn.setCellValueFactory(new PropertyValueFactory<StudentData, String>("ID")); /*una vez
-        tenemos los datos ya dentro de la clase StudenData lo metemos en el FXML */
-        this.firstnamecolumn.setCellValueFactory(new PropertyValueFactory<StudentData, String>("firstName"));
-        this.lastnamecolumn.setCellValueFactory(new PropertyValueFactory<StudentData, String>("lastName"));
-        this.emailcolumn.setCellValueFactory(new PropertyValueFactory<StudentData, String>("email"));
-        this.dobcolumn.setCellValueFactory(new PropertyValueFactory<StudentData, String>("DOB"));
-
-        this.studenttable.setItems(null);
-        this.studenttable.setItems(list);
-    }
-
-    @FXML
-    private void addStudent(ActionEvent event) {
-        String sqlInsert = "INSERT INTO students(id,fname,lname,email,DOB) VALUES (?,?,?,?,?)";
-        /*mete los valores con los placeholders (cada ? es un placeholder)*/
-
-        try {
-            Connection conn = dbConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sqlInsert);
-
-            stmt.setString(1, this.id.getText());  /*lo metemos en el place holder 1 con la info del FXML textfield de id*/
-            stmt.setString(2, this.firstname.getText());
-            stmt.setString(3, this.lastname.getText());
-            stmt.setString(4, this.email.getText());
-            stmt.setString(5, this.dob.getEditor().getText()); /*al ser un date picker lo convierto a string para meterlo en sql*/
-
-            stmt.execute();
-            conn.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void clearFields(ActionEvent event) {
-        this.id.setText("");
-        this.firstname.setText("");
-        this.lastname.setText("");
-        this.email.setText("");
-        this.dob.setValue(null);
-    }
 
     @FXML
     private TextField name;
@@ -248,7 +141,13 @@ public class AdminController implements Initializable {
                                 rs.getString(4),
                                 studentPng));
                         break;
-
+                    default:
+                        this.info.add(new LoginData(rs.getString(1),
+                                rs.getString(2),
+                                rs.getString(3),
+                                rs.getString(4),
+                                null));
+                        break;
                 }
             }
 
@@ -261,12 +160,34 @@ public class AdminController implements Initializable {
         this.namecolumn.setCellValueFactory(new PropertyValueFactory<LoginData, String>("Name"));
         this.passwordcolumn.setCellValueFactory(new PropertyValueFactory<LoginData, String>("Password"));
         this.divisioncolumn.setCellValueFactory(new PropertyValueFactory<LoginData, String>("Division"));
+        this.divisioncolumn.setCellFactory(ComboBoxTableCell.forTableColumn(new DefaultStringConverter(),RowDiv));
+        this.divisioncolumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<LoginData, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<LoginData, String> event) {
+               /*En resumen este metodo recibe los cambios de la columna especifica y procede a detectar
+                este nuevo valor indicado con la combobox y lo sube a la base sql*/
+                String selectedItem = event.getNewValue();
+                LoginData selectedRowItem = accesstable.getSelectionModel().getSelectedItem();
+                try {
+                    String sqlDeleteLogin = "UPDATE login SET division =  ? WHERE ID = ?";
+                    Connection conn = dbConnection.getConnection();
+                    PreparedStatement stmt = conn.prepareStatement(sqlDeleteLogin);
+                    stmt.setString(1, selectedItem);
+                    stmt.setString(2, selectedRowItem.getID());
+                    stmt.execute();
+                    conn.close();
+                }
+                catch (SQLException e){
+
+                }
+            }
+        });
         this.id2column.setCellValueFactory(new PropertyValueFactory<LoginData, String>("ID"));
         this.loginImage.setPrefWidth(50);
         this.loginImage.setMaxWidth(50);
         this.loginImage.setCellValueFactory(new PropertyValueFactory<LoginData, ImageView>("Photo"));
-        this.accesstable.setItems(null);
         this.accesstable.setItems(this.info);
+        this.accesstable.setEditable(true);
     }
 
     @FXML

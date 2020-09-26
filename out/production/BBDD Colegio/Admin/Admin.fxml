@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -27,11 +26,11 @@
                                 <children>
                                     <TableView fx:id="accesstable" onMouseMoved="#activateButtons" prefHeight="632.0" prefWidth="940.0">
                                         <columns>
-                                    <TableColumn fx:id="loginImage" prefWidth="91.0" text="Imagen" />
+                                    <TableColumn fx:id="loginImage" prefWidth="50.0" text="Imagen" />
                                             <TableColumn fx:id="namecolumn" onEditCommit="#ModifySelectedRowLoginName" prefWidth="209.0" text="Nombre" />
                                             <TableColumn fx:id="passwordcolumn" minWidth="0.0" onEditCommit="#ModifySelectedRowLoginPassword" prefWidth="177.0" text="Contraseña" />
-                                            <TableColumn fx:id="divisioncolumn" prefWidth="175.0" text="Categoria" />
-                                    <TableColumn fx:id="id2column" prefWidth="286.0" text="ID" />
+                                            <TableColumn fx:id="divisioncolumn" prefWidth="231.0" text="Categoria" />
+                                    <TableColumn fx:id="id2column" prefWidth="272.0" text="ID" />
                                         </columns>
                                     </TableView>
                                 </children>

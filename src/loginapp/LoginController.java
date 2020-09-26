@@ -81,6 +81,7 @@ public class LoginController implements Initializable {
                             break;
                         case "Admin":
                             adminLogin();
+                            break;
                     }
             }
 
